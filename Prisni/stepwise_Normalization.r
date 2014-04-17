@@ -93,7 +93,7 @@ getBEDFormatMatrix <- function(sample_matrix){
 
 
 # check total number of probes. For samples belonging to same platform IDs have same count of probe marker points
-probeCount <- function(mat){
+probe.count <- function(mat){
 	count <- 0
 	for(i in 2:nrow(mat)){
 		count <- count+as.numeric(mat[i,6])
@@ -112,17 +112,27 @@ rep.col<-function(x,n){
 
 
 # Normalized Matrix
-normalize.matrix <- function(nmat){
-	for(i in 1:nrow(nmat)){
-		non.norm.matrix <- matrix(exmat[i,1:ncol(nmat)], nrow=1)
-		norm.matrix <- rep.row(non.norm.matrix[1,1:ncol(nmat)],as.numeric(non.norm.matrix[1,6]))
-	}
-	norm.matrix <- rbind(norm.matrix, norm.matrix)
-	return(norm.matrix)
+
+normalize.row <- function(xmat,n){
+	print("normalize.row")
+	norm.row.matrix <- rep.row(xmat[n,1:ncol(xmat)], as.numeric(xmat[n,6]))
+	return(norm.row.matrix)
 }
 
-# Final Normalized Matrix (merge norm.matrix for copy gain, loss and neutral)
-norm.matrix.gain <- normalize.matrix(nmat)
-norm.matrix.loss <- normalize.matrix(nmat)
-norm.matrix.neutral <- normalize.matrix(nmat)
+normalize.matrix <- function(nmat){
+	print("normalize.matrix")
+	norm.row <- normalize.row(nmat,2)
+	for(i in 3:nrow(nmat)){
+		norm.row <- rbind(norm.row,normalize.row(nmat,i))
+	}
+	return(norm.row)
+}
+## usage
 
+norm.matrix.chr <- normalize.matrix(chr5.mat)
+
+write.to.file <- function(norm.mat, file){
+write.table(norm.mat, file=paste(gsub("new_segments.tab", "normalized.segments.tab", file), sep="/"), quote=FALSE, row.names=FALSE, col.names=FALSE, sep="\t")
+print("written to file...")
+print(file)
+}
