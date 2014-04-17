@@ -136,3 +136,17 @@ write.table(norm.mat, file=paste(gsub("new_segments.tab", "normalized.segments.t
 print("written to file...")
 print(file)
 }
+######## Implementation
+
+setwd("~/Desktop/GSE11960/")
+dir_list <- list.dirs()
+segfilename <- c()
+chr <- c(1:23)
+#read all new_segments file. The new_segments files are the one formatted to BED file format structure.
+for(i in 2:5){
+	segfilename[i-1] <- paste(dir_list[i], "new_segments.tab", sep="/")
+	##1
+	segfile_mat <- readFile(segfilename[i-1])
+	norm.matrix <- normalize.matrix(segfile_mat)
+	write.to.file(norm.matrix, segfilename[i-1])
+	}
