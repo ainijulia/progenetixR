@@ -49,7 +49,6 @@ countCopyProfile <- function(data, copy_status){
 ## gives number of loss, normal and amplified segments per chromosome
 countTotalCopyProfiles <- c(countCopyProfile(chr5_sample1, -1),countCopyProfile(chr5_sample1, 0), countCopyProfile(chr5_sample1, 1))
 
-# separate copy status based profiles
 
 #find gain/loss/normal matrix
 segmentProfilesPerChromosome <- function(data, copy_status, copy_count){
@@ -137,16 +136,21 @@ print("written to file...")
 print(file)
 }
 ######## Implementation
-
 setwd("~/Desktop/GSE11960/")
 dir_list <- list.dirs()
 segfilename <- c()
 chr <- c(1:23)
+count <- c()
 #read all new_segments file. The new_segments files are the one formatted to BED file format structure.
-for(i in 2:5){
+for(i in 2:115){
 	segfilename[i-1] <- paste(dir_list[i], "new_segments.tab", sep="/")
 	##1
 	segfile_mat <- readFile(segfilename[i-1])
+	count[i-1] <- probe.count(segfile_mat)
 	norm.matrix <- normalize.matrix(segfile_mat)
 	write.to.file(norm.matrix, segfilename[i-1])
 	}
+	
+	
+	##
+	
