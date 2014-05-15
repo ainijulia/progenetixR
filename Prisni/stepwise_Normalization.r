@@ -146,7 +146,6 @@ for(i in 2:115){
 	segfilename[i-1] <- paste(dir_list[i], "new_segments.tab", sep="/")
 	##1
 	segfile_mat <- readFile(segfilename[i-1])
-	count[i-1] <- probe.count(segfile_mat)
 	norm.matrix <- normalize.matrix(segfile_mat)
 	write.to.file(norm.matrix, segfilename[i-1])
 	}
