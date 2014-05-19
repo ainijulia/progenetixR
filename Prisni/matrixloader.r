@@ -1,4 +1,4 @@
-c.sample <- read.table("~/Desktop/Prisni/Ovarian-Carcinoma-UID.txt")
+c.sample <- read.table("~/Desktop/Prisni/RenalCa/renal-carcinoma-UID.txt")
 uid <- c()
 url <- c()
 for( i in 1:nrow(c.sample)){
@@ -12,7 +12,7 @@ pg.matrix.loader <- function(url){
 } 
 
 write.to.file <- function(mat, gsm){
-write.table(mat, file=paste("~/Desktop/Prisni/OvaCa", gsm, sep="/"), quote=FALSE, row.names=T, col.names=T, sep="\t")
+write.table(mat, file=paste("~/Desktop/Prisni/RenalCa", gsm, sep="/"), quote=FALSE, row.names=T, col.names=T, sep="\t")
 print("written to file...")
 print(gsm)
 }
