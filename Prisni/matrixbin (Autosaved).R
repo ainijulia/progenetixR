@@ -42,10 +42,10 @@ axis(1, at=1:length(mean.profile), labels=sd.label[,1])
 
 #####
 sd.checker <- function(sd.profile){
-	if(sd.count[names(sd.count)==0]){
-		check <- TRUE
-	}
-	else check <- FALSE
+	for(i in 1:length(sd.profile)){
+		if(sd.profile[i]==0){
+			
+		}
 }
 
 mean.count <- table(mean.profile)
