@@ -41,7 +41,7 @@ else {
 
 class.id.matrix <- as.matrix(class.id[[1]])
 for(j in 2:length(class.id)){
-  class.id.matrix <- cbind(class.id.matrix, as.matrix(class.id[[i]]))
+  class.id.matrix <- cbind(class.id.matrix, as.matrix(class.id[[j]]))
 }
 
 # ncol(class.id.matrix) = number of features 
@@ -64,23 +64,57 @@ new.class.feature.matrix <- cbind(class.id, or.feature.matrix) # class vs featur
 ## Y <- class.id.matrix[i,j] ; i <- row number (class id locator), j <- column number (state swtich)
 ## such that corr.list[[i]] <- {c.1, c.2, c.3, c.4, c.5} 
 
-corr.list <- c()
+corr.list1 <- c()
+corr.list2 <- c()
+corr.list3 <- c()
+corr.list4 <- c()
+corr.list5 <- c()
 for(i in 1:ncol(or.feature.matrix)){
   
   X <- as.numeric(or.feature.matrix[,i])
-  corr.list[[i]][1] <- cor(X,class.id.matrix[i,1])
-  corr.list[[i]][2] <- cor(X,class.id.matrix[i,2])
-  corr.list[[i]][3] <- cor(X,class.id.matrix[i,3])
-  corr.list[[i]][4] <- cor(X,class.id.matrix[i,4])
-  corr.list[[i]][5] <- cor(X,class.id.matrix[i,5])
+  Y1 <- class.id.matrix[1,]
+  Y2 <- class.id.matrix[2,]
+  Y3 <- class.id.matrix[3,]
+  Y4 <- class.id.matrix[4,]
+  Y5 <- class.id.matrix[5,]
   
+  corr.list1[[i]] <- cor(X,Y1) 
+  corr.list2[[i]] <- cor(X,Y2) 
+  corr.list3[[i]] <- cor(X,Y3) 
+  corr.list4[[i]] <- cor(X,Y4) 
+  corr.list5[[i]] <- cor(X,Y5) 
 }
 
+corr.list <- cbind(corr.list1, corr.list2)
+corr.list <- cbind(corr.list, corr.list3)
+corr.list <- cbind(corr.list, corr.list4)
+corr.list <- cbind(corr.list, corr.list5)
+
+# corr.list is a 5 column matrix repsenting correlations between features and the id switches
 # assigning a threshold 'd'
 ## say, d == 0.15 (preserving 278 features)
 
-abs.corr.list <- abs(corr.list)
-corr.feature.class <- abs.corr.list[abs.corr.list>=0.15]
+abs.corr.list1 <- abs(corr.list1)
+corr.extr1 <- abs.corr.list[abs.corr.list1>=0.15]
+
+abs.corr.list2 <- abs(corr.list2)
+corr.extr2 <- abs.corr.list[abs.corr.list2>=0.15]
+
+abs.corr.list3 <- abs(corr.list3)
+corr.extr3 <- abs.corr.list[abs.corr.list3>=0.15]
+
+abs.corr.list4 <- abs(corr.list4)
+corr.extr4 <- abs.corr.list[abs.corr.list4>=0.15]
+
+abs.corr.list5 <- abs(corr.list5)
+corr.extr5 <- abs.corr.list[abs.corr.list5>=0.15]
+
+
+corr.extr <- cbind(corr.extr1, corr.extr2)
+corr.extr <- cbind(corr.extr, corr.extr3)
+corr.extr <- cbind(corr.extr, corr.extr4)
+corr.extr <- cbind(corr.extr, corr.extr5)
+
 # 'corr.feature.class' is the filtered list of correlation coefficients for pairwise correlations between features and classes
 
 order.corr.list <- sort(corr.feature.class, decreasing=TRUE) # order the filtered correlation coefficients in descending order
