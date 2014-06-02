@@ -396,3 +396,238 @@ for(i in 1:nrow(keys.list5)){
 }
 ordered.feature5 <- as.matrix(ordered.feature5) # ordered features for list 5 in descending order
 ordered.key.feature5 <- cbind(keys.list5[,1], ordered.feature5[,1])
+
+
+## corr coeeficients in descending order
+SU.1c <- as.matrix(as.numeric(unlist(order.corr.list1[1])))
+SU.2c <- as.matrix(as.numeric(unlist(order.corr.list2[1])))
+SU.3c <- as.matrix(as.numeric(unlist(order.corr.list3[1])))
+SU.4c <- as.matrix(as.numeric(unlist(order.corr.list4[1])))
+SU.5c <- as.matrix(as.numeric(unlist(order.corr.list5[1])))
+
+# S'list :: 
+# ordered.key.feature1, ordered.key.feature2, ordered.key.feature3, ordered.key.feature4, ordered.key.feature5
+Slist1 <- cbind(ordered.key.feature1, SU.1c)
+Slist2 <- cbind(ordered.key.feature2, SU.2c)
+Slist3 <- cbind(ordered.key.feature3, SU.3c)
+Slist4 <- cbind(ordered.key.feature4, SU.4c)
+Slist5 <- cbind(ordered.key.feature5, SU.5c)
+
+
+
+## SUpq calculation 
+
+Sel.pq1 <- matrix(NA, ncol=nrow(Slist1), nrow=nrow(or.feature.matrix))
+c <- 0
+for(j in 1:nrow(Slist1)){
+  for(i in 1:ncol(or.feature.matrix)){
+    if(grepl(Slist1[j,2], colnames(or.feature.matrix)[i]))
+      c<-c+1
+      Sel.pq1[1:nrow(or.feature.matrix),c] <- or.feature.matrix[1:nrow(or.feature.matrix),i]
+  }
+}
+
+Sel.pq2 <- matrix(NA, ncol=nrow(Slist2), nrow=nrow(or.feature.matrix))
+c <- 0
+for(j in 1:nrow(Slist2)){
+  for(i in 1:ncol(or.feature.matrix)){
+    if(grepl(Slist2[j,2], colnames(or.feature.matrix)[i]))
+      c<-c+1
+    Sel.pq2[1:nrow(or.feature.matrix),c] <- or.feature.matrix[1:nrow(or.feature.matrix),i]
+  }
+}
+
+Sel.pq3 <- matrix(NA, ncol=nrow(Slist3), nrow=nrow(or.feature.matrix))
+c <- 0
+for(j in 1:nrow(Slist3)){
+  for(i in 1:ncol(or.feature.matrix)){
+    if(grepl(Slist3[j,2], colnames(or.feature.matrix)[i]))
+      c<-c+1
+    Sel.pq3[1:nrow(or.feature.matrix),c] <- or.feature.matrix[1:nrow(or.feature.matrix),i]
+  }
+}
+
+Sel.pq4 <- matrix(NA, ncol=nrow(Slist4), nrow=nrow(or.feature.matrix))
+c <- 0
+for(j in 1:nrow(Slist4)){
+  for(i in 1:ncol(or.feature.matrix)){
+    if(grepl(Slist4[j,2], colnames(or.feature.matrix)[i]))
+      c<-c+1
+    Sel.pq4[1:nrow(or.feature.matrix),c] <- or.feature.matrix[1:nrow(or.feature.matrix),i]
+  }
+}
+
+Sel.pq5 <- matrix(NA, ncol=nrow(Slist5), nrow=nrow(or.feature.matrix))
+c <- 0
+for(j in 1:nrow(Slist5)){
+  for(i in 1:ncol(or.feature.matrix)){
+    if(grepl(Slist5[j,2], colnames(or.feature.matrix)[i]))
+      c<-c+1
+    Sel.pq5[1:nrow(or.feature.matrix),c] <- or.feature.matrix[1:nrow(or.feature.matrix),i]
+  }
+}
+
+corr.s.pq1 <- cor(as.numeric(Sel.pq1[1:nrow(Sel.pq1),1]), as.numeric(Sel.pq1[1:nrow(Sel.pq1),2])) 
+for(i in 2:ncol(Sel.pq1)){
+corr.s.pq1 <- rbind(corr.s.pq1, cor(as.numeric(Sel.pq1[1:nrow(Sel.pq1),i]), as.numeric(Sel.pq1[1:nrow(Sel.pq1),i+1]))) 
+}
+corr.s.pq1 <- rbind(corr.s.pq1, cor(as.numeric(Sel.pq1[1:nrow(Sel.pq1),i]), as.numeric(Sel.pq1[1:nrow(Sel.pq1),1])))
+
+corr.s.pq2 <- cor(as.numeric(Sel.pq2[1:nrow(Sel.pq2),1]), as.numeric(Sel.pq2[1:nrow(Sel.pq2),2])) 
+for(i in 2:ncol(Sel.pq2)){
+  corr.s.pq2 <- rbind(corr.s.pq2, cor(as.numeric(Sel.pq2[1:nrow(Sel.pq2),i]), as.numeric(Sel.pq2[1:nrow(Sel.pq2),i+1]))) 
+}
+corr.s.pq2 <- rbind(corr.s.pq2, cor(as.numeric(Sel.pq2[1:nrow(Sel.pq2),i]), as.numeric(Sel.pq2[1:nrow(Sel.pq2),1])))
+
+corr.s.pq3 <- cor(as.numeric(Sel.pq3[1:nrow(Sel.pq3),1]), as.numeric(Sel.pq3[1:nrow(Sel.pq3),2])) 
+for(i in 2:ncol(Sel.pq3)){
+  corr.s.pq3 <- rbind(corr.s.pq3, cor(as.numeric(Sel.pq3[1:nrow(Sel.pq3),i]), as.numeric(Sel.pq3[1:nrow(Sel.pq3),i+1]))) 
+}
+corr.s.pq3 <- rbind(corr.s.pq3, cor(as.numeric(Sel.pq3[1:nrow(Sel.pq3),i]), as.numeric(Sel.pq3[1:nrow(Sel.pq3),1])))
+
+corr.s.pq4 <- cor(as.numeric(Sel.pq4[1:nrow(Sel.pq4),1]), as.numeric(Sel.pq4[1:nrow(Sel.pq4),2])) 
+for(i in 2:ncol(Sel.pq4)){
+  corr.s.pq4 <- rbind(corr.s.pq4, cor(as.numeric(Sel.pq4[1:nrow(Sel.pq4),i]), as.numeric(Sel.pq4[1:nrow(Sel.pq4),i+1]))) 
+}
+corr.s.pq4 <- rbind(corr.s.pq4, cor(as.numeric(Sel.pq4[1:nrow(Sel.pq4),i]), as.numeric(Sel.pq4[1:nrow(Sel.pq4),1])))
+
+corr.s.pq5 <- cor(as.numeric(Sel.pq5[1:nrow(Sel.pq5),1]), as.numeric(Sel.pq5[1:nrow(Sel.pq5),2])) 
+for(i in 2:ncol(Sel.pq5)){
+  corr.s.pq5 <- rbind(corr.s.pq5, cor(as.numeric(Sel.pq5[1:nrow(Sel.pq5),i]), as.numeric(Sel.pq5[1:nrow(Sel.pq5),i+1]))) 
+}
+corr.s.pq5 <- rbind(corr.s.pq5, cor(as.numeric(Sel.pq5[1:nrow(Sel.pq5),i]), as.numeric(Sel.pq5[1:nrow(Sel.pq5),1])))
+
+
+
+
+# feature versus feature correlation compute ------------------------------
+# fi.p <- start index of the feature in  the sorted list of correlation coefficients
+## fi.p contains index, coeff values (abs), 
+# fi.q <- next index of the feature in the sorted list of correlation coeeficients
+
+S1 <- Slist1[,2]
+S1.d <- Slist1[,3]
+
+S2 <- Slist2[,2]
+S2.d <- Slist2[,3]
+
+S3 <- Slist3[,2]
+S3.d <- Slist3[,3]
+
+S4 <- Slist4[,2]
+S4.d <- Slist4[,3]
+
+S5 <- Slist5[,2]
+S5.d <- Slist5[,3]
+
+i <- 1
+p # 1st position of the Slist
+q # 2nd position onwards of the Slist
+
+j <- i+1
+
+Sbest <- c()
+c <- 0
+for(p in 1:length(S1.d)){
+  Fp <- S1[[p]]
+  for(q in 2:length(S1.d)){
+    Fq <- S1[[q]]
+    SUpq <- cor(as.numeric(Sel.pq1[,p]), as.numeric(Sel.pq1[,q]))
+    SUqc <- S1.d[[2]]
+    if(SUpq >= SUqc){
+      c <- c+1
+      print(c)
+      Fq <- NA
+    }
+    Sbest[[c]] <- Fq
+  }  
+}
+
+Sbest1 <- Sbest[!is.na(Sbest)]
+Sbest1 <- unique(Sbest1)
+
+
+Sbest <- c()
+c <- 0
+for(p in 1:length(S2.d)){
+  Fp <- S2[[p]]
+  for(q in 2:length(S2.d)){
+    Fq <- S2[[q]]
+    SUpq <- cor(as.numeric(Sel.pq2[,p]), as.numeric(Sel.pq2[,q]))
+    SUqc <- S2.d[[2]]
+    if(SUpq >= SUqc){
+      c <- c+1
+      print(c)
+      Fq <- NA
+    }
+    Sbest[[c]] <- Fq
+  }  
+}
+
+Sbest2 <- Sbest[!is.na(Sbest)]
+Sbest2 <- unique(Sbest2)
+
+Sbest <- c()
+c <- 0
+for(p in 1:length(S3.d)){
+  Fp <- S3[[p]]
+  for(q in 2:length(S3.d)){
+    Fq <- S3[[q]]
+    SUpq <- cor(as.numeric(Sel.pq3[,p]), as.numeric(Sel.pq3[,q]))
+    SUqc <- S3.d[[3]]
+    if(SUpq >= SUqc){
+      c <- c+1
+      print(c)
+      Fq <- NA
+    }
+    Sbest[[c]] <- Fq
+  }  
+}
+
+Sbest3 <- Sbest[!is.na(Sbest)]
+Sbest3 <- unique(Sbest3)
+
+Sbest <- c()
+c <- 0
+for(p in 1:length(S4.d)){
+  Fp <- S4[[p]]
+  for(q in 2:length(S4.d)){
+    Fq <- S4[[q]]
+    SUpq <- cor(as.numeric(Sel.pq4[,p]), as.numeric(Sel.pq4[,q]))
+    SUqc <- S4.d[[4]]
+    if(SUpq >= SUqc){
+      c <- c+1
+      print(c)
+      Fq <- NA
+    }
+    Sbest[[c]] <- Fq
+  }  
+}
+
+Sbest4 <- Sbest[!is.na(Sbest)]
+Sbest4 <- unique(Sbest4)
+
+Sbest <- c()
+c <- 0
+for(p in 1:length(S5.d)){
+  Fp <- S5[[p]]
+  for(q in 2:length(S5.d)){
+    Fq <- S5[[q]]
+    SUpq <- cor(as.numeric(Sel.pq5[,p]), as.numeric(Sel.pq5[,q]))
+    SUqc <- S5.d[[5]]
+    if(SUpq >= SUqc){
+      c <- c+1
+      print(c)
+      Fq <- NA
+    }
+    Sbest[[c]] <- Fq
+  }  
+}
+
+Sbest5 <- Sbest[!is.na(Sbest)]
+Sbest5 <- unique(Sbest5)
+
+## Sbest1,2,3,4,5 are the features selected for cancer types 5, 4, 3, 2, 1
+
+
+
